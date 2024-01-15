@@ -16,14 +16,13 @@ import { ref } from "vue";
 
 const selectedTab = ref();
 
-const tabs = [
-  { name: "rolls", title: "Роллы" },
-  { name: "sushi", title: "Суши и гунканы" },
-  { name: "sets", title: "Сеты" },
-  { name: "noodles", title: "Лапша и рис" },
-  { name: "salads", title: "Салаты" },
-  { name: "hot_dish", title: "Горячие блюда" },
-];
+const fetch = useFetch();
+
+const { data } = await useFetch('/api/categories');
+
+console.log(data.value)
+
+const tabs = data.value;
 
 selectedTab.value = tabs[0];
 
