@@ -1,30 +1,25 @@
 <template>
   <div class="menuTabsSection">
-    <MenuTab
-      v-for="tab in tabs"
-      :key="tab.name"
-      :selected="tab.name === selectedTab.name"
-      @click="switchTab(tab)"
-    >
-      {{ tab.title }}
-    </MenuTab>
+    <template v-if="!tabs.length"> fdfdfd </template>
+    <template v-else>
+      <MenuTab
+        v-for="tab in tabs"
+        :key="tab.id"
+        :selected="tab.id === selectedTab.id"
+        @click="switchTab(tab)"
+      >
+        {{ tab.name }}
+      </MenuTab>
+    </template>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 
-const selectedTab = ref();
+const { data: tabs } = await useFetch("/api/categories");
 
-const fetch = useFetch();
-
-const { data } = await useFetch('/api/categories');
-
-console.log(data.value)
-
-const tabs = data.value;
-
-selectedTab.value = tabs[0];
+const selectedTab = ref(tabs.value[0]);
 
 const switchTab = (tab) => {
   selectedTab.value = tab;

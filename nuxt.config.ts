@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
+    '@nuxtjs/supabase', 
     [
       "@nuxtjs/google-fonts",
       {
@@ -11,4 +12,8 @@ export default defineNuxtConfig({
       },
     ],
   ],
+
+  supabase: {
+    redirect: false,
+  }
 });
