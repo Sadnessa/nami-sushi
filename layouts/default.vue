@@ -1,11 +1,11 @@
 <template>
   <HeaderBar />
   <main>
-    <NuxtPage />
+    <NuxtPage/>
   </main>
 </template>
 
-<style>
+<style lang="scss">
 body {
   margin: 0;
   font-family: "Neucha", cursive;

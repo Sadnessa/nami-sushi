@@ -1,29 +1,26 @@
 <template>
   <div class="menuTabsSection">
-    <template v-if="!tabs.length"> fdfdfd </template>
+    <template v-if="!store.categories.length"> fdfdfd </template>
     <template v-else>
       <MenuTab
-        v-for="tab in tabs"
+        v-for="tab in store.categories"
         :key="tab.id"
-        :selected="tab.id === selectedTab.id"
-        @click="switchTab(tab)"
+        :selected="tab.id === Number($route.query.type)"
       >
-        {{ tab.name }}
+        <NuxtLink :to="`/category?type=${tab.id}`">
+          {{ tab.name }}
+        </NuxtLink>
       </MenuTab>
     </template>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+const store = useAppStore();
 
-const { data: tabs } = await useFetch("/api/categories");
-
-const selectedTab = ref(tabs.value[0]);
-
-const switchTab = (tab) => {
-  selectedTab.value = tab;
-};
+if (!store.categories.length) {
+  await store.getCategories();
+}
 </script>
 
 <style lang="scss" scoped>
@@ -32,5 +29,10 @@ const switchTab = (tab) => {
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
 }
 </style>

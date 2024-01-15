@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    '@nuxtjs/supabase', 
+    '@pinia/nuxt',
+    "@nuxtjs/supabase",
     [
       "@nuxtjs/google-fonts",
       {
@@ -15,5 +16,13 @@ export default defineNuxtConfig({
 
   supabase: {
     redirect: false,
-  }
+  },
+
+  routeRules: {
+    '/': { redirect: '/category?type=1' },
+  },
+
+  pinia: {
+    storesDirs: ['./stores/**', './custom-folder/stores/**'],
+  },
 });
