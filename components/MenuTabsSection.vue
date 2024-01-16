@@ -28,6 +28,7 @@ if (!store.categories.length) {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <button :class="computeButtonClass">
+  <button :class="computeButtonClass" :style="computeButtonStyle">
     <img :src="icon" v-if="icon" />
     <slot />
   </button>
@@ -17,6 +17,16 @@ const props = defineProps({
   icon: {
     type: String,
   },
+
+  background: {
+    type: String,
+    default: '#fff'
+  },
+
+  textColor: {
+    type: String,
+    default: "#000"
+  }
 });
 
 const slots = useSlots();
@@ -27,6 +37,13 @@ const computeButtonClass = computed(() => {
     onlyIcon: props.icon && !slots.default,
   };
 });
+
+const computeButtonStyle = computed(() => {
+  return {
+    'background-color' : props.background,
+    color: props.textColor
+  }
+})
 </script>
 
 <style lang="scss">
