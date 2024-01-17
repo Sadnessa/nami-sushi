@@ -16,6 +16,10 @@
             :description="product.description"
             :productWeight="product.weight"
             :price="product.price"
+            :productID="product.id"
+            @addToCart="store.addToUserCart(product)"
+            @decreaseAmount="store.decreaseProductAmount(product)"
+            @increaseAmount="store.increaseProductAmount(product)"
           />
         </template>
       </div>
@@ -24,6 +28,7 @@
 </template>
 
 <script setup>
+const store = useAppStore();
 const route = useRoute();
 
 const products = ref(null);

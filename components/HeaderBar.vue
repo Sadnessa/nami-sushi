@@ -9,12 +9,14 @@
       </li>
     </ul>
     <div class="phone"> <img src="/phone.svg"/>  +7 979 700 97 91</div>
-    <ActionButton rounded icon="/icon-cart.svg"></ActionButton>
-    <ActionButton rounded>Войти</ActionButton>
+    <ActionButton rounded icon="/icon-cart.svg" @click="$emit('onCartClick')"/>
+    <ActionButton rounded @click="$emit('onLoginClick')">Войти</ActionButton>
   </nav>
 </template>
 
 <script setup>
+const emit = defineEmits(['onCartClick', 'onLoginClick'])
+
 const menuItems = [
   { name: "menu", label: "Меню", link: "/" },
   { name: "delivery", label: "Доставка", link: "/delivery" },

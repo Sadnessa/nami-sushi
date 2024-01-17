@@ -9,6 +9,7 @@ export default defineNuxtConfig({
       {
         families: {
           Neucha: true,
+          'PT Sans Narrow': true,
         },
       },
     ],
