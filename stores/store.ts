@@ -23,6 +23,14 @@ export const useAppStore = defineStore("app-store", {
       return this.userCart.push({ ...product, amount: 1 });
     },
 
+    removeFromUserCart(product: Product) {
+      const selectedElementID = this.userCart.findIndex((el) => {
+        return el.id === product.id;
+      });
+
+      this.userCart.splice(selectedElementID, 1);
+    },
+
     increaseProductAmount(product: Product) {
       const selectedElementID = this.userCart.findIndex((el) => {
         return el.id === product.id;

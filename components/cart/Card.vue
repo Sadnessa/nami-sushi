@@ -1,6 +1,6 @@
 <template>
   <div class="cartCard">
-    <img />
+    <img  class="cartCard__img" v-if="props.image"/>
     <div class="cartCard__info">
       <h2 class="cartCard__name">{{ props.productName }}</h2>
       <p class="cartCard__description">{{ props.description }}</p>
@@ -26,7 +26,7 @@
       <p>{{ `Сумма ${computedTotalPrice} ₽` }}</p>
     </div>
     <div class="cartCard__removeButtonWrapper">
-      <button class="cartCard__removeButton">
+      <button class="cartCard__removeButton" @click="$emit('removeFromCart')">
         <img src="/trash.svg" />
       </button>
     </div>
@@ -34,6 +34,9 @@
 </template>
 
 <script setup>
+const emit = defineEmits(["removeFromCart", "increaseAmount", "decreaseAmount"]);
+
+
 const props = defineProps({
   image: {
     type: String,
@@ -74,10 +77,20 @@ const computedTotalPrice = computed(() => {
   padding: 15px;
   padding-right: 0;
 
+  &__img {
+    margin-left: 25px;
+  }
+
+  &__info {
+    flex-grow: 1;
+    margin-right: 35px;
+  }
+
   &__name {
     font-size: 16px;
     margin: 0;
     font-weight: 400;
+    text-transform: uppercase;
   }
 
   &__description,
@@ -87,6 +100,17 @@ const computedTotalPrice = computed(() => {
     font-size: 13px;
     font-family: "PT Sans Narrow", sans-serif;
     margin: 0px;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 25px;
+
+    p {
+      margin: 0;
+    }
   }
 
   &__actions {

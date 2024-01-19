@@ -10,7 +10,14 @@
         :amount="product.amount"
         :price="product.price"
         :weight="product.weight"
+        @increaseAmount="store.increaseProductAmount(product)"
+        @decreaseAmount="store.decreaseProductAmount(product)"
+        @removeFromCart="store.removeFromUserCart(product)"
       />
+    </div>
+    <div class="cartDrawer__buyInfo">
+      <p class="cartDrawer__totalPrice">{{ `Общая сумма ${computedTotalPrice} ₽` }}</p>
+      <p class="cartDrawer__note">* Сумма заказа для доставки курьером должна составлять не менее 500 ₽</p>
     </div>
     <div class="cartDrawer__actions">
       <ActionButton @click="hideCart">Вернуться к покупкам</ActionButton>
@@ -45,6 +52,12 @@ const computeAnimatonClass = computed(() => {
 const computeBlur = computed(() => {
   return doShowCart.value ? "blur" : "";
 });
+
+const computedTotalPrice = computed(() => {
+  return store.userCart.reduce((acc, el) => {
+    return acc += el.amount * el.price;
+  }, 0);
+});
 </script>
 
 <style lang="scss">
@@ -73,11 +86,13 @@ body {
 }
 
 aside {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   z-index: 10;
   background-color: rgba(235, 225, 215, 1);
   right: 0;
-  height: 100vh;
+  height: calc(100vh - 80px);
   padding: 40px 45px;
   transition: all ease 0.3s;
 
@@ -118,6 +133,18 @@ aside {
   .cartDrawer__actions {
     display: flex;
     gap: 30px;
+  }
+
+  .cartDrawer__productList {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;
+  }
+
+  .cartDrawer__note {
+    font-family: Arial, sans-serif;
+    font-weight: 400;
   }
 }
 </style>
