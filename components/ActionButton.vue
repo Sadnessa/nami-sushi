@@ -1,6 +1,6 @@
 <template>
-  <button :class="computeButtonClass" :style="computeButtonStyle">
-    <img :src="icon" v-if="icon" />
+  <button :class="computeButtonClass">
+    <Icon v-if="icon" :name="props.icon" :size="props.iconSize"/>
     <slot />
   </button>
 </template>
@@ -15,6 +15,10 @@ const props = defineProps({
   },
 
   icon: {
+    type: String,
+  },
+
+  iconSize: {
     type: String,
   },
 
@@ -38,16 +42,15 @@ const computeButtonClass = computed(() => {
   };
 });
 
-const computeButtonStyle = computed(() => {
-  return {
-    'background-color' : props.background,
-    color: props.textColor
-  }
+const computedIconString = computed(() => {
+  return `url('${props.icon}') no-repeat center`;
 })
 </script>
 
 <style lang="scss">
 button {
+  background-color: v-bind('props.background');
+  color: v-bind('props.textColor');
   font-family: "Neucha", cursive;
   border: none;
   border-radius: 8px;
@@ -64,5 +67,13 @@ button {
 
 .onlyIcon {
   padding: 9px;
+}
+
+.img {
+  background-color: v-bind(textColor);
+  -webkit-mask: v-bind(computedIconString);
+  mask: v-bind(computedIconString);
+  height: 20px;
+  width: 20px;
 }
 </style>

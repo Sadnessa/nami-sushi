@@ -11,23 +11,25 @@
       <div class="cartCard__actions">
         <ActionButton
           background="rgba(49, 37, 37, 1)"
+          textColor="white"
           @click="$emit('decreaseAmount')"
           rounded
-          icon="/minus.svg"
+          icon="pepicons-pop:minus"
         />
         {{ amount }}
         <ActionButton
           background="rgba(49, 37, 37, 1)"
+          textColor="white"
           @click="$emit('increaseAmount')"
           rounded
-          icon="/plus.svg"
+          icon="pepicons-pop:plus"
         />
       </div>
       <p>{{ `Сумма ${computedTotalPrice} ₽` }}</p>
     </div>
     <div class="cartCard__removeButtonWrapper">
       <button class="cartCard__removeButton" @click="$emit('removeFromCart')">
-        <img src="/trash.svg" />
+        <Icon name="bi:trash3" />
       </button>
     </div>
   </div>
@@ -130,6 +132,7 @@ const computedTotalPrice = computed(() => {
     background-color: rgba(49, 37, 37, 1);
     padding: 26px 16px;
     padding-right: 10px;
+    color: white;
   }
 }
 </style>

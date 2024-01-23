@@ -22,13 +22,13 @@
         <ActionButton
           @click="$emit('decreaseAmount')"
           rounded
-          icon="/minus.svg"
+          icon="pepicons-pop:minus"
         />
         {{ computeProductInTheCart.amount }}
         <ActionButton
           @click="$emit('increaseAmount')"
           rounded
-          icon="/plus.svg"
+          icon="pepicons-pop:plus"
         />
       </div>
     </div>

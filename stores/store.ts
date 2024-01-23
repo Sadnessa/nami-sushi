@@ -5,6 +5,7 @@ type CartProduct = Product & { amount: number };
 
 export const useAppStore = defineStore("app-store", {
   state: () => ({
+    doShowCart: false,
     categories: [],
     userCart: [] as CartProduct[],
   }),

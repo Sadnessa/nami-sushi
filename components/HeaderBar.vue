@@ -8,8 +8,8 @@
         </NuxtLink>
       </li>
     </ul>
-    <div class="phone"> <img src="/phone.svg"/>  +7 979 700 97 91</div>
-    <ActionButton rounded icon="/icon-cart.svg" @click="$emit('onCartClick')"/>
+    <div class="phone"> <Icon name="solar:phone-bold" size="24px"/>  +7 979 700 97 91</div>
+    <ActionButton rounded icon="heroicons:shopping-bag-solid" @click="$emit('onCartClick')" iconSize="24px"/>
     <ActionButton rounded @click="$emit('onLoginClick')">Войти</ActionButton>
   </nav>
 </template>
