@@ -1,22 +1,23 @@
 import { defineStore } from "pinia";
 import type { Product } from "../types/product";
+import type { User } from "~/types/user";
 
 type CartProduct = Product & { amount: number };
 
 export const useAppStore = defineStore("app-store", {
   state: () => ({
-    doShowCart: false,
     categories: [],
     userCart: [] as CartProduct[],
+    userProfile: null as User | null,
   }),
 
   actions: {
     async getCategories() {
-      const { data: tabs } = await useFetch("/api/categories");
-      if (tabs.value === null) {
+      const tabs = await $fetch("/api/categories");
+      if (tabs === null) {
         return;
       } else {
-        this.categories = tabs.value;
+        this.categories = tabs;
       }
     },
 
@@ -53,6 +54,13 @@ export const useAppStore = defineStore("app-store", {
         this.userCart.splice(selectedElementID, 1);
       } else {
         this.userCart[selectedElementID].amount--;
+      }
+    },
+
+    async getUserProfile() {
+      const profile = await $fetch<User>("/api/profiles");
+      if (profile) {
+        this.userProfile = profile;
       }
     },
   },

@@ -49,6 +49,9 @@ const computedIconString = computed(() => {
 
 <style lang="scss">
 button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: v-bind('props.background');
   color: v-bind('props.textColor');
   font-family: "Neucha", cursive;

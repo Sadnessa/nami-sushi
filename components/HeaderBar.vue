@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <img src="/logo.svg" class="logo" width="182px"/>
+    <img src="/logo.svg" class="logo" width="182px" />
     <ul>
       <li v-for="item in menuItems" :key="item.name">
         <NuxtLink :to="item.link">
@@ -8,14 +8,40 @@
         </NuxtLink>
       </li>
     </ul>
-    <div class="phone"> <Icon name="solar:phone-bold" size="24px"/>  +7 979 700 97 91</div>
-    <ActionButton rounded icon="heroicons:shopping-bag-solid" @click="$emit('onCartClick')" iconSize="24px"/>
-    <ActionButton rounded @click="$emit('onLoginClick')">Войти</ActionButton>
+    <div class="phone">
+      <Icon name="solar:phone-bold" size="24px" /> +7 979 700 97 91
+    </div>
+    <ActionButton
+      rounded
+      icon="heroicons:shopping-bag-solid"
+      @click="$emit('onCartClick')"
+      iconSize="24px"
+    />
+    <template v-if="authorizedUser">
+      <NuxtLink to="/profile">
+        <div class="profileCircle" v-if="store.userProfile !== null">
+          {{ store.userProfile.name }}
+        </div>
+      </NuxtLink>
+
+      <ActionButton rounded @click="$emit('onLogoutClick')">
+        Выйти
+      </ActionButton>
+    </template>
+    <template v-else>
+      <ActionButton rounded @click="$emit('onAuthorizationClick')">
+        Войти
+      </ActionButton>
+    </template>
   </nav>
 </template>
 
-<script setup>
-const emit = defineEmits(['onCartClick', 'onLoginClick'])
+<script setup lang="ts">
+const emit = defineEmits([
+  "onCartClick",
+  "onAuthorizationClick",
+  "onLogoutClick",
+]);
 
 const menuItems = [
   { name: "menu", label: "Меню", link: "/" },
@@ -24,6 +50,13 @@ const menuItems = [
   { name: "feedback", label: "Отзывы", link: "/feedback" },
   { name: "contacts", label: "Контакты", link: "/contacts" },
 ];
+
+const authorizedUser = useSupabaseUser();
+
+const store = useAppStore();
+if (authorizedUser) {
+  store.getUserProfile();
+}
 </script>
 
 <style lang="scss">
@@ -31,8 +64,6 @@ nav {
   height: 62px;
   background: rgba(6, 45, 78, 1);
   padding: 20px 0;
-  // position: fixed;
-  // width: 100%;
   display: flex;
   align-items: center;
   color: white;
