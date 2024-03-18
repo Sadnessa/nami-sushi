@@ -1,6 +1,6 @@
 <template>
   <div class="modalWindow" v-if="model">
-    <div class="modalWindow__overlay" @click="closeModal"/>
+    <div class="modalWindow__overlay" @click="closeModal" />
     <div class="modalWindow__dialog" :style="computedDialogStyle">
       <slot />
     </div>
@@ -11,21 +11,21 @@
 const props = defineProps({
   bgColor: {
     type: String,
-    default: 'white',
-  }
-})
+    default: "white",
+  },
+});
 
 const model = defineModel();
 
 const computedDialogStyle = computed(() => {
-  return { 'background-color': props.bgColor }
-})
+  return { "background-color": props.bgColor };
+});
 
 const closeModal = () => {
   model.value = false;
-}
+};
 </script>
- 
+
 <style lang="scss" scoped>
 .modalWindow {
   position: fixed;
@@ -50,4 +50,4 @@ const closeModal = () => {
     z-index: 20;
   }
 }
-</style> 
+</style>

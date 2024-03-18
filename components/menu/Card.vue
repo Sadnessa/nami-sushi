@@ -89,6 +89,7 @@ const computeCardClass = computed(() => {
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.25);
+  background: #fafafa;
 
   &.cart {
     background-color: rgba(49, 37, 37, 1);

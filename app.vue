@@ -24,8 +24,12 @@
       @onLogoutClick="userLogout"
     />
     <main>
+      <img class="backgroundImg top left" src="/BG-menu1.png" />
+      <img class="backgroundImg top right" src="/BG-menu2.png" />
+      <img class="backgroundImg bottom left" src="/BG-menu3.png" />
       <NuxtPage />
     </main>
+    <footer />
   </div>
 </template>
 
@@ -33,6 +37,14 @@
 const currentView = ref("cart");
 const doShowCart = ref(false);
 const doShowLoginWindow = ref(false);
+
+watch([doShowLoginWindow, doShowCart], () => {
+  if (doShowLoginWindow.value || doShowCart.value) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+});
 
 const showCart = () => {
   doShowCart.value = true;
@@ -65,11 +77,11 @@ const userLogout = async () => {
 };
 
 const computeAnimatonClass = computed(() => {
-  return doShowCart.value ? "" : "hidden";
+  return { hidden: !doShowCart.value };
 });
 
 const computeBlur = computed(() => {
-  return doShowCart.value || doShowLoginWindow.value ? "blur" : "";
+  return { blur: doShowCart.value || doShowLoginWindow.value };
 });
 </script>
 
@@ -77,6 +89,12 @@ const computeBlur = computed(() => {
 body {
   margin: 0;
   font-family: "Neucha", cursive;
+}
+
+#__nuxt {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .page-enter-active,
@@ -102,6 +120,10 @@ body {
 
 <style lang="scss" scoped>
 .currentPage {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+
   &.blur {
     position: relative;
 
@@ -114,6 +136,7 @@ body {
       left: 0;
       background-color: rgba(60, 75, 97, 0.5);
       backdrop-filter: blur(10px);
+      z-index: 3;
     }
   }
 }
@@ -146,5 +169,49 @@ aside {
   &.hidden {
     transform: translateX(100%);
   }
+}
+
+main {
+  position: relative;
+  overflow: hidden;
+  flex-grow: 1;
+
+  .backgroundImg {
+    position: absolute;
+    z-index: -1;
+
+    &.top {
+      top: 0;
+    }
+
+    &.right {
+      right: 0;
+    }
+
+    &.top.right {
+      width: 20%;
+    }
+
+    &.top.left {
+      width: 30%;
+    }
+
+    &.bottom.left {
+      width: 10%;
+    }
+
+    &.left {
+      left: 0;
+    }
+
+    &.bottom {
+      bottom: 0;
+    }
+  }
+}
+
+footer {
+  height: 40px;
+  background-color: #243139;
 }
 </style>

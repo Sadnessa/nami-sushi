@@ -12,6 +12,7 @@
             :key="field"
             v-model="input.value"
             :placeholder="input.placeholder"
+            :rules="[(val: string) => val.length > 0 || 'Заполните поле']"
           >
             <template #prepend>
               <Icon :name="input.icon" size="18px" />

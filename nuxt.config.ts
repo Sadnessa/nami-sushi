@@ -15,7 +15,10 @@ export default defineNuxtConfig({
       },
     ],
     "nuxt-icon",
+    "nuxt-viewport",
   ],
+
+  viewport: {},
 
   app: {
     pageTransition: { name: "page", mode: "out-in" },

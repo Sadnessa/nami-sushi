@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav ref="navRef">
     <img src="/logo.svg" class="logo" width="182px" />
     <ul>
       <li v-for="item in menuItems" :key="item.name">
@@ -41,6 +41,7 @@ const emit = defineEmits([
   "onCartClick",
   "onAuthorizationClick",
   "onLogoutClick",
+  "updateNavHeightValue",
 ]);
 
 const menuItems = [
@@ -62,11 +63,15 @@ if (authorizedUser) {
 <style lang="scss">
 nav {
   height: 62px;
+  width: 100%;
   background: rgba(6, 45, 78, 1);
   padding: 20px 0;
   display: flex;
   align-items: center;
   color: white;
+  position: sticky;
+  z-index: 2;
+  top: 0;
 
   .logo {
     margin-top: 50px;
