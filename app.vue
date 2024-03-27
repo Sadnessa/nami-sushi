@@ -24,9 +24,12 @@
       @onLogoutClick="userLogout"
     />
     <main>
-      <img class="backgroundImg top left" src="/BG-menu1.png" />
-      <img class="backgroundImg top right" src="/BG-menu2.png" />
-      <img class="backgroundImg bottom left" src="/BG-menu3.png" />
+      <template v-if="viewport.isGreaterOrEquals('sm')">
+        <img class="backgroundImg top left" src="/BG-menu1.png" />
+        <img class="backgroundImg top right" src="/BG-menu2.png" />
+        <img class="backgroundImg bottom left" src="/BG-menu3.png" />
+      </template>
+
       <NuxtPage />
     </main>
     <footer />
@@ -37,12 +40,19 @@
 const currentView = ref("cart");
 const doShowCart = ref(false);
 const doShowLoginWindow = ref(false);
+const viewport = useViewport();
 
 watch([doShowLoginWindow, doShowCart], () => {
   if (doShowLoginWindow.value || doShowCart.value) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "auto";
+  }
+
+  if (!doShowCart.value) {
+    setTimeout(() => {
+      currentView.value = "cart";
+    }, 100);
   }
 });
 
@@ -156,6 +166,7 @@ aside {
   }
 
   .cartDrawer__content {
+    //width: calc(646px - 90px);
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -164,6 +175,7 @@ aside {
     padding: 40px 45px;
     height: calc(100vh - 80px);
     z-index: 20;
+    overflow: auto;
   }
 
   &.hidden {

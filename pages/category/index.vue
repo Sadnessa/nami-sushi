@@ -4,7 +4,10 @@
     <MenuTabsSection class="menuSection__tabs" />
 
     <div class="menuSection__productListWrapper">
-      <div class="menuSection__productList" :class="computeLoaderClass">
+      <div
+        class="menuSection__productList"
+        :class="[computeLoaderClass, viewport.breakpoint.value]"
+      >
         <template v-if="products == null">
           <LoaderBar />
         </template>
@@ -30,6 +33,7 @@
 <script setup>
 const store = useAppStore();
 const route = useRoute();
+const viewport = useViewport();
 
 const products = ref(null);
 
@@ -93,8 +97,21 @@ watch(
 
   &__productList {
     display: grid;
-    grid-template-columns: repeat(4, 270px);
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
+
+    &.lg {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &.sm,
+    &.md {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &.xs {
+      grid-template-columns: repeat(1, 1fr);
+    }
 
     &.loader {
       display: flex;

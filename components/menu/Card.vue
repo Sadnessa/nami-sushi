@@ -85,7 +85,7 @@ const computeCardClass = computed(() => {
 .menuCard {
   display: flex;
   flex-direction: column;
-  max-width: 210px;
+  //max-width: 210px;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.25);

@@ -6,11 +6,11 @@ export default defineEventHandler(async (event) => {
   const user = await serverSupabaseUser(event);
   if (user) {
     const { data } = await client
-      .from("User")
-      .select("*")
-      .eq("id", String(user.id));
+      .from("Order")
+      .select("*, Product(*)")
+      .eq("user_id", String(user.id));
     if (data) {
-      return data[0];
+      return data;
     }
   } else {
     //throw new Error("Authorization error!");

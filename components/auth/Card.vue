@@ -5,6 +5,7 @@
     </div>
     <LoaderBar v-if="loading" />
     <template v-else>
+      <ErrorAlert v-if="doShowError"> {{ errorMessage }}</ErrorAlert>
       <div class="authCard__content">
         <template v-if="currentView === 'SignIn'">
           <InputText
@@ -120,19 +121,35 @@ const changeCurrentView = () => {
 const supabase = useSupabaseClient();
 
 const loading = ref(false);
+const doShowError = ref(false);
+const errorMessage = ref("");
+
+const resetError = () => {
+  doShowError.value = false;
+  errorMessage.value = "";
+};
+
+const store = useAppStore();
 
 const signInUser = async () => {
+  resetError();
   loading.value = true;
   const { data: registerData, error: registerError } =
     await supabase.auth.signInWithPassword({
       email: signInInputs.email.value,
       password: signInInputs.password.value,
     });
+  await store.getUserProfile();
+
+  loading.value = false;
 
   if (registerError) {
-    throw new Error(`${registerError.message}`);
+    doShowError.value = true;
+    errorMessage.value = registerError.message;
+    return;
+    //throw new Error(`${registerError.message}`);
   }
-  loading.value = false;
+
   emit("userAuthorized");
 };
 

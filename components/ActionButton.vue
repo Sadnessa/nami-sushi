@@ -1,6 +1,6 @@
 <template>
   <button :class="computeButtonClass">
-    <Icon v-if="icon" :name="props.icon" :size="props.iconSize"/>
+    <Icon v-if="icon" :name="props.icon" :size="props.iconSize" />
     <slot />
   </button>
 </template>
@@ -24,13 +24,13 @@ const props = defineProps({
 
   background: {
     type: String,
-    default: '#fff'
+    default: "#fff",
   },
 
   textColor: {
     type: String,
-    default: "#000"
-  }
+    default: "#000",
+  },
 });
 
 const slots = useSlots();
@@ -44,7 +44,7 @@ const computeButtonClass = computed(() => {
 
 const computedIconString = computed(() => {
   return `url('${props.icon}') no-repeat center`;
-})
+});
 </script>
 
 <style lang="scss">
@@ -52,8 +52,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: v-bind('props.background');
-  color: v-bind('props.textColor');
+  background-color: v-bind("props.background");
+  color: v-bind("props.textColor");
   font-family: "Neucha", cursive;
   border: none;
   border-radius: 8px;
