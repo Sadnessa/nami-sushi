@@ -72,15 +72,7 @@ watch(
     margin: 0;
     margin-bottom: 50px;
 
-    &::before {
-      display: block;
-      content: "";
-      height: 10px;
-      width: 10px;
-      border-radius: 100%;
-      background-color: black;
-    }
-
+    &::before,
     &::after {
       display: block;
       content: "";

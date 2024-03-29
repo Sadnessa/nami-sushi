@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   if (user) {
     const { data } = await client
       .from("Order")
-      .select("*, Product(*)")
+      .select("*, orderProducts:Product(*, typeName:ProductCategory(name))")
       .eq("user_id", String(user.id));
     if (data) {
       return data;

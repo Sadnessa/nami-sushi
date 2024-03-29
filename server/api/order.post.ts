@@ -1,17 +1,13 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { serverSupabaseUser } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
-  const user = await serverSupabaseUser(event);
-
   const body = await readBody(event);
   const orderBody = {
     name: body.name,
     address: body.address,
     phone: body.phone,
     additional_info: body.additional_info,
-    user_id: user ? user.id : null,
   };
 
   const { data } = await client.from("Order").insert([orderBody]).select();

@@ -3,4 +3,5 @@ export type User = {
   name: string;
   phone: string;
   address: string;
+  email: string;
 };

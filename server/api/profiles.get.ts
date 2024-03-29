@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
       .select("*")
       .eq("id", String(user.id));
     if (data) {
+      data[0].email = user.email;
       return data[0];
     }
   } else {
