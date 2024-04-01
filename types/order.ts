@@ -7,7 +7,7 @@ type OrderInfo = {
   created_at: Date;
   deliveryMethod: string;
   additional_info: string;
-  Product: Array<Product>;
+  orderProducts: Array<Product>;
 };
 
 export type Order = OrderInfo & Omit<User, "id">;

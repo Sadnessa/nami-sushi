@@ -7,32 +7,64 @@
           <p class="userName">{{ store.userProfile?.name }}</p>
           <div class="userAddress">
             <p>Адрес доставки</p>
-            <span>{{ store.userProfile?.address }}</span>
+            <InputText
+              v-model="address"
+              placeholder="Добавьте адрес доставки"
+            />
           </div>
           <div class="userPhone">
             <p>Номер телефона</p>
-            <span>{{ store.userProfile?.phone }}</span>
+            <InputText v-model="phone" />
           </div>
         </div>
         <div class="userInfo__security">
           <div class="userEmail">
             <p>Электронная почта</p>
-            <span>{{ store.userProfile?.email }}</span>
+            <InputText v-model="email" />
           </div>
           <div class="userPassword">
             <p>Изменить пароль</p>
-            <InputText />
-            <InputText />
+            <InputText placeholder="Новый пароль" v-model="newPassword" />
+            <InputText
+              placeholder="Повторите новый пароль"
+              v-model="repeatPassword"
+            />
+            <ActionButton
+              @click="updateUserData"
+              background="#312525"
+              text-color="white"
+            >
+              Сохранить изменения
+            </ActionButton>
           </div>
         </div>
       </div>
       <div class="profileSection__orderHistory">
         <p class="orderHistory__title">История заказов</p>
         <div class="orderHistory">
-          <ExpansionItem v-for="order in orderHistory" :key="order.id">
-            <template #title>{{ order.id }}</template>
-            <template #content></template>
-          </ExpansionItem>
+          <template v-for="(order, index) in orderHistory" :key="order.id">
+            <ExpansionItem>
+              <template #title>
+                <div class="order__title">
+                  <div>
+                    {{ order.id }}
+                    <p>{{ computedDate(order.created_at) }}</p>
+                  </div>
+                  <span> {{ computedDeliveryStatus(order.delivered) }}</span>
+                </div>
+              </template>
+              <template #content>
+                <OrderProductCard
+                  v-for="product in order.orderProducts"
+                  :key="product.id"
+                  :productName="product.name"
+                  :price="product.price"
+                  :description="product.description"
+                />
+              </template>
+            </ExpansionItem>
+            <hr v-if="index !== orderHistory!.length - 1" />
+          </template>
         </div>
       </div>
     </div>
@@ -43,8 +75,56 @@
 import type { Order } from "~/types/order";
 
 const store = useAppStore();
-const orderHistory = (await $fetch("/api/orders")) as Array<Order>;
-console.log(orderHistory);
+
+const address = ref("");
+const phone = ref("");
+const email = ref("");
+const newPassword = ref("");
+const repeatPassword = ref("");
+
+watch(
+  () => store.userProfile,
+  (newValue) => {
+    if (newValue !== null) {
+      address.value = newValue.address;
+      phone.value = newValue.phone;
+      email.value = newValue.email;
+    }
+  },
+  { immediate: true }
+);
+
+const orderHistory = ref<Array<Order> | null>();
+const getOrderHistory = async () => {
+  orderHistory.value = await $fetch("/api/orders");
+};
+getOrderHistory();
+
+const updateUserData = async () => {
+  await $fetch("/api/update_user", {
+    method: "post",
+    body: {
+      // name: name.value,
+      email: email.value,
+      password: newPassword.value.length ? newPassword.value : undefined,
+      phone: phone.value,
+      address: address.value,
+    },
+  });
+};
+
+const computedDeliveryStatus = (status: Boolean) => {
+  if (status) {
+    return "Доставлен";
+  } else {
+    return "В процессе";
+  }
+};
+
+const computedDate = (date: Date) => {
+  const newDate = new Date(date);
+  return newDate.toLocaleString();
+};
 </script>
 
 <style lang="scss" scoped>
@@ -94,11 +174,19 @@ console.log(orderHistory);
 
   &__userInfo {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    //grid-template-columns: repeat(2, 1fr);
   }
 
   .userName {
     font-size: 34px;
+  }
+
+  .order {
+    &__title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 }
 

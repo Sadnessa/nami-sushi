@@ -12,7 +12,7 @@
       />
       <slot name="append" />
     </div>
-    <div class="inputText__error">
+    <div class="inputText__error" v-if="props.rules.length">
       <Transition name="fade">
         <span v-if="computedError">{{ computedError }}</span>
       </Transition>
