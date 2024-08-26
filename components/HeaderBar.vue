@@ -35,7 +35,7 @@
       <template v-if="authorizedUser">
         <NuxtLink to="/profile">
           <div class="profileCircle" v-if="store.userProfile">
-            {{ store.userProfile.name }}
+            {{ store.userProfile.name[0] }}
           </div>
         </NuxtLink>
 
@@ -156,6 +156,23 @@ nav {
 
   .actionButtons {
     display: flex;
+    gap: 8px;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .profileCircle {
+      height: 42px;
+      width: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: 99%;
+      font-weight: bold;
+    }
   }
 }
 </style>
